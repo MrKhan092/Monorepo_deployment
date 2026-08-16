@@ -12,9 +12,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.backend
+    image: ${DOCKERHUB_USERNAME}/todo-app-backend:${IMAGE_TAG}
     ports:
       - "8000:8000"
     environment:
@@ -23,9 +21,7 @@ services:
       - postgres
 
   websocket:
-    build:
-      context: .
-      dockerfile: docker/DockerFile.ws
+    image: ${DOCKERHUB_USERNAME}/todo-app-websocket:${IMAGE_TAG}
     ports:
       - "8081:8081"
     environment:
@@ -34,15 +30,9 @@ services:
       - postgres
 
   web:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.frontend
-      args:
-        DATABASE_URL: "postgresql://postgres:mysecretpassword@postgres:5432/mydb?schema=public"
+    image: ${DOCKERHUB_USERNAME}/todo-app-frontend:${IMAGE_TAG}
     ports:
       - "3000:3000"
-    environment:
-      DATABASE_URL: "postgresql://postgres:mysecretpassword@postgres:5432/mydb?schema=public"
     depends_on:
       - postgres
 

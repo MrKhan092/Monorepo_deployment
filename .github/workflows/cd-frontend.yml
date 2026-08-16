@@ -30,3 +30,13 @@ jobs:
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
       ## Step to deploy this to a VM
+      
+      - name: Deploy to VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+          chmod 600 ~/ssh_key
+
+          ssh -o StrictHostKeyChecking=no \
+            -i ~/ssh_key \
+            ubuntu@${{ secrets.VM_HOST }} \
+            "cd ~/todo-app && docker compose pull web && docker compose up -d web"
