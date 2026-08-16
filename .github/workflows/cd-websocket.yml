@@ -28,7 +28,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/todo-app-websocket:${{ github.sha }}
       ## Step to deploy this to a VM
-      - name: Deploy to VM
+      - name: Deploy to the VM
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
@@ -37,4 +37,3 @@ jobs:
             -i ~/ssh_key \
             ubuntu@${{ secrets.VM_HOST }} \
             "cd ~/todo-app && docker compose pull websocket && docker compose up -d websocket"
-            

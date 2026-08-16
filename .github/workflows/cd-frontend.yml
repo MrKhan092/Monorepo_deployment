@@ -31,7 +31,7 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
       ## Step to deploy this to a VM
       
-      - name: Deploy to VM
+      - name: Deploy to the VM
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
